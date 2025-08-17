@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/constants/gaps.dart';
-import 'package:twitter_clone/constants/sizes.dart';
 import 'package:twitter_clone/features/authentication/customization_screen.dart';
 import 'package:twitter_clone/features/authentication/sign_up_screen.dart';
+import 'package:twitter_clone/features/authentication/verification_screen.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -18,9 +18,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _emailController = TextEditingController();
   final _birthDateController = TextEditingController();
   bool _showDatePicker = false;
-  // var _model = Account(name: '', email: '', birthDate: '');
 
-  // 임시로 현재 입력값을 저장할 변수들
   final DateTime _initialBirthDate = DateTime.now();
   bool _isValid = false;
   bool _isCustomized = false;
@@ -65,6 +63,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     setState(() {
       _showDatePicker = false;
     });
+  }
+
+  void _onSignUpTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => VerificationScreen(email: _emailController.text),
+      ),
+    );
   }
 
   @override
@@ -238,7 +244,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: _onSignUpTap,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Theme.of(
                                         context,

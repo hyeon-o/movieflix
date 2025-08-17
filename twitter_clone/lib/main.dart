@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/constants/sizes.dart';
 import 'package:twitter_clone/features/authentication/sign_up_screen.dart';
 
 void main() {
