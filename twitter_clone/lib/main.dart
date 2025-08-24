@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/features/authentication/sign_up_screen.dart';
+import 'package:twitter_clone/features/main_navigation/main_navigation_screen.dart';
 
 void main() {
   runApp(const TwitterApp());
@@ -13,6 +14,7 @@ class TwitterApp extends StatelessWidget {
     return MaterialApp(
       title: 'Twitter Clone',
       theme: ThemeData(
+        splashFactory: NoSplash.splashFactory,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(backgroundColor: Colors.white, elevation: 0),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1DA1F2)),
@@ -62,7 +64,7 @@ class TwitterApp extends StatelessWidget {
           ),
         ),
       ),
-      home: SignUpScreen(),
+      home: MainNavigationScreen(),
     );
   }
 }
