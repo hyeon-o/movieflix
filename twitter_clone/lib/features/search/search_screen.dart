@@ -13,11 +13,7 @@ class SearchScreen extends StatelessWidget {
         toolbarHeight: Sizes.size80,
         title: Text(
           'Search',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: Sizes.size44,
-            fontWeight: FontWeight.w800,
-          ),
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(Sizes.size44),
@@ -101,11 +97,7 @@ class SearchScreen extends StatelessWidget {
                           Gaps.h10,
                           Text(
                             '24K followers',
-                            style: TextStyle(
-                              fontSize: Sizes.size14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),

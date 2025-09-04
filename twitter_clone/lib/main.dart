@@ -1,5 +1,6 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/features/authentication/sign_up_screen.dart';
 import 'package:twitter_clone/features/main_navigation/main_navigation_screen.dart';
 
 void main() {
@@ -13,6 +14,7 @@ class TwitterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Twitter Clone',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         splashFactory: NoSplash.splashFactory,
         scaffoldBackgroundColor: Colors.white,
@@ -21,26 +23,11 @@ class TwitterApp extends StatelessWidget {
         // 트위터 브랜드 색상들
         primaryColor: const Color(0xFF1DA1F2),
         textTheme: TextTheme(
-          headlineLarge: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w800,
-            color: Colors.black,
-          ),
-          titleLarge: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-            color: Colors.black,
-          ),
-          bodyLarge: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
+          headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
+          titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           bodyMedium: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-          bodySmall: TextStyle(
-            fontSize: 13,
-            color: Colors.grey.shade500,
-          ),
+          bodySmall: TextStyle(fontSize: 13, color: Colors.grey.shade500),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -62,6 +49,31 @@ class TwitterApp extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
+        ),
+      ),
+      darkTheme: FlexThemeData.dark(
+        // Using FlexColorScheme built-in FlexScheme enum based colors.
+        scheme: FlexScheme.blue,
+        // Component theme configurations for dark mode.
+        subThemesData: const FlexSubThemesData(
+          interactionEffects: true,
+          tintedDisabledControls: true,
+          blendOnColors: true,
+          useM2StyleDividerInM3: true,
+          inputDecoratorIsFilled: true,
+          inputDecoratorBorderType: FlexInputBorderType.outline,
+          alignedDropdown: true,
+          navigationRailUseIndicator: true,
+        ),
+        // Direct ThemeData properties.
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+        cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
+          titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          bodyMedium: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+          bodySmall: TextStyle(fontSize: 13, color: Colors.grey.shade500),
         ),
       ),
       home: MainNavigationScreen(),

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/constants/sizes.dart';
 import 'package:twitter_clone/features/activity/activity_screen.dart';
 import 'package:twitter_clone/features/search/search_screen.dart';
+import 'package:twitter_clone/features/users/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -13,7 +14,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
 
   void _onItemTapped(int index) {
     // setState를 호출하여 화면을 다시 그리도록 함
@@ -32,7 +33,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(offstage: _selectedIndex != 1, child: SearchScreen()),
           Offstage(offstage: _selectedIndex != 2, child: Container(color: Colors.green,)),
           Offstage(offstage: _selectedIndex != 3, child: ActivityScreen()),
-          Offstage(offstage: _selectedIndex != 4, child: Container(color: Colors.purple,)),
+          Offstage(offstage: _selectedIndex != 4, child: UserProfileScreen()),
         ],
       ),
       bottomNavigationBar: CupertinoTabBar(

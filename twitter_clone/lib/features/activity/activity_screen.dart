@@ -14,11 +14,7 @@ class ActivityScreen extends StatelessWidget {
           toolbarHeight: Sizes.size80,
           title: Text(
             'Activity',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size44,
-              fontWeight: FontWeight.w800,
-            ),
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
           bottom: TabBar(
             tabAlignment: TabAlignment.start,
@@ -26,15 +22,12 @@ class ActivityScreen extends StatelessWidget {
             isScrollable: true,
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: BoxDecoration(
-              color: Colors.black,
               borderRadius: BorderRadius.circular(Sizes.size16),
             ),
-            labelStyle: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: Sizes.size16,
-            ),
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
+            indicatorColor: Theme.of(context).textTheme.bodyLarge!.color!,
+            labelColor: Theme.of(context).textTheme.bodyLarge!.color!,
+            unselectedLabelColor: Colors.grey.shade500,
+            labelStyle: Theme.of(context).textTheme.bodyLarge,
             dividerHeight: 0,
             tabs: [
               Tab(text: 'All'),
@@ -101,11 +94,7 @@ class ActivityScreen extends StatelessWidget {
                           title: RichText(
                             text: TextSpan(
                               text: 'John Doe',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: Sizes.size16,
-                                color: Colors.black,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge,
                               children: [
                                 TextSpan(
                                   text: ' 4h',
@@ -155,11 +144,7 @@ class ActivityScreen extends StatelessWidget {
                           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: Sizes.size14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
