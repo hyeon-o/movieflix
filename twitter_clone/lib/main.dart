@@ -1,10 +1,21 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:twitter_clone/features/settings/repos/settings_repository.dart';
+import 'package:twitter_clone/features/settings/view_models/settings_state.dart';
 
-void main() {
-  runApp(const TwitterApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  final settingsRepository = SettingsRepository(prefs);
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => SettingsState(settingsRepository)),
+  ], child: const TwitterApp()));
 }
 
 class TwitterApp extends StatelessWidget {
@@ -12,9 +23,11 @@ class TwitterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkMode = context.watch<SettingsState>().dartMode;
+
     return MaterialApp(
       title: 'Twitter Clone',
-      themeMode: ThemeMode.system,
+      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         splashFactory: NoSplash.splashFactory,
         scaffoldBackgroundColor: Colors.white,

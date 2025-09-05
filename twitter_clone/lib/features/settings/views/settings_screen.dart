@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:twitter_clone/constants/sizes.dart';
-import 'package:twitter_clone/features/settings/privacy_screen.dart';
+import 'package:twitter_clone/features/settings/view_models/settings_state.dart';
+import 'package:twitter_clone/features/settings/views/privacy_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -12,6 +14,13 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(centerTitle: true, title: Text("Settings")),
       body: ListView(
         children: [
+          SwitchListTile(
+            value: context.watch<SettingsState>().dartMode,
+            onChanged: (value) {
+              context.read<SettingsState>().setDarkMode(value);
+            },
+            title: Text("Dark mode"),
+          ),
           ListTile(
             leading: Icon(Icons.person_add_outlined, size: Sizes.size32),
             title: Text("Follow and invite friends"),

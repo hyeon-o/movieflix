@@ -4,9 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:saver_gallery/saver_gallery.dart';
-import 'package:twitter_clone/constants/sizes.dart';
-import 'package:twitter_clone/features/users/user_profile_screen.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends StatefulWidget {
   final XFile image;
