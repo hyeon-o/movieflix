@@ -1,33 +1,40 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twitter_clone/common/shared_preferences_config.dart';
 import 'package:twitter_clone/features/main_navigation/main_navigation_screen.dart';
-import 'package:twitter_clone/features/settings/repos/settings_repository.dart';
 import 'package:twitter_clone/features/settings/view_models/settings_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
-  final settingsRepository = SettingsRepository(prefs);
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => SettingsState(settingsRepository)),
-  ], child: const TwitterApp()));
+  runApp(
+    ProviderScope(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+      child: const TwitterApp(),
+    ),
+  );
 }
 
-class TwitterApp extends StatelessWidget {
+class TwitterApp extends ConsumerWidget {
   const TwitterApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final darkMode = context.watch<SettingsState>().dartMode;
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Twitter Clone',
-      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ref
+          .watch(settingsViewModelProvider)
+          .when(
+            data: (settings) =>
+                settings.darkMode ? ThemeMode.dark : ThemeMode.light,
+            error: (error, stackTrace) => ThemeMode.system,
+            loading: () => ThemeMode.system,
+          ),
       theme: ThemeData(
         splashFactory: NoSplash.splashFactory,
         scaffoldBackgroundColor: Colors.white,

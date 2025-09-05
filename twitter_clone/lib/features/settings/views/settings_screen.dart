@@ -1,23 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/constants/sizes.dart';
 import 'package:twitter_clone/features/settings/view_models/settings_state.dart';
 import 'package:twitter_clone/features/settings/views/privacy_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text("Settings")),
       body: ListView(
         children: [
           SwitchListTile(
-            value: context.watch<SettingsState>().dartMode,
+            value: ref
+                .watch(settingsViewModelProvider)
+                .when(
+                  data: (settings) => settings.darkMode,
+                  error: (error, stackTrace) => false,
+                  loading: () => false,
+                ),
             onChanged: (value) {
-              context.read<SettingsState>().setDarkMode(value);
+              ref.read(settingsViewModelProvider.notifier).setDarkMode(value);
             },
             title: Text("Dark mode"),
           ),
@@ -33,7 +39,10 @@ class SettingsScreen extends StatelessWidget {
             leading: Icon(Icons.lock_outline, size: Sizes.size32),
             title: Text("Privacy"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyScreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PrivacyScreen()),
+              );
             },
           ),
           ListTile(
