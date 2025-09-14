@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:thread_clone/providers/sign_in_provider.dart';
 import 'package:thread_clone/providers/sign_up_provider.dart';
+import 'package:thread_clone/screens/home_screen.dart';
+import 'package:thread_clone/utils/show_message_utils.dart';
 
 enum SignType { signIn, signUp }
 
@@ -52,28 +55,50 @@ class _SignFormState extends ConsumerState<SignForm> {
           FractionallySizedBox(
             widthFactor: 1,
             child: FilledButton(
-              onPressed: () async {
-                if (_formKey.currentState?.validate() ?? false) {
-                  if (widget.signType == SignType.signIn) {
-                    await ref
-                      .read(signInProvider.notifier)
-                      .signIn(_emailController.text, _passwordController.text, context);
-                  } else {
-                    await ref
-                        .read(signUpProvider.notifier)
-                        .signUp(_emailController.text, _passwordController.text, context);
-                  }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please fill in all fields')),
-                  );
-                }
-              },
-              child: Text(widget.signType == SignType.signIn ? 'Log In' : 'Sign Up'),
+              onPressed: _submit,
+              child: Text(
+                widget.signType == SignType.signIn ? 'Log In' : 'Sign Up',
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      if (widget.signType == SignType.signIn) {
+        ref
+            .read(signInProvider.notifier)
+            .signIn(
+              _emailController.text,
+              _passwordController.text,
+              () {
+                context.go(HomeScreen.routePath);
+              },
+              (error) {
+                ShowMessageUtils.showErrorMessage(context, error);
+              },
+            );
+      } else {
+        ref
+            .read(signUpProvider.notifier)
+            .signUp(
+              _emailController.text,
+              _passwordController.text,
+              () {
+                context.go(HomeScreen.routePath);
+              },
+              (error) {
+                ShowMessageUtils.showErrorMessage(context, error);
+              },
+            );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields')),
+      );
+    }
   }
 }
